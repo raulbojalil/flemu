@@ -1,0 +1,25 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div style="width:100%;hight:100%;">
+<div id="game"></div>
+</div>
+<script type="text/javascript">
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    console.log(params);
+
+    EJS_player = '#game';
+    EJS_biosUrl = ''; // Url to Bios file
+    EJS_gameUrl = '/filemanager/download?folder=' + params.core + '&filename=' + params.filename; // Url to Game rom
+    EJS_core = params.core;
+    EJS_pathtodata = 'data/'; //path to all of the wasm and js files. MUST all be in the same directory!!
+    EJS_AdUrl = ''; //path to AD page
+
+</script>
+<script src="data/loader.js"></script>
+<style>
+body, html{
+margin: 0;
+padding: 0;
+}
+</style>
