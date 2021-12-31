@@ -1,6 +1,13 @@
 [
-   { name: "Super Nintendo Entertainment System", "core: "snes" },
-   { name: "Nintendo Entertainment System", "core: "nes" },
-   { name: "Gameboy Advance", "core: "gba" },
-   { name: "Nintendo DS", "core: "nds" },
+   { "name": "Nintendo Entertainment System", "core": "nes" },
+   { "name": "Super Nintendo Entertainment System", "core": "snes" },
+   { "name": "Nintendo 64", "core": "n64" },
+   { "name": "Gameboy", "core": "gb"},
+   { "name": "Gameboy Color", "core": "gbc"},
+   { "name": "Gameboy Advance", "core": "gba" },
+   { "name": "Nintendo DS", "core": "nds" },
+   { "name": "Sega Master System", "core": "segaMS" },
+   { "name": "Sega Mega Drive", "core": "segaMD" },
+   { "name": "Sega Game Gear", "core": "segaGG" },
+   { "name": "PlayStation", "core": "ps" }
 ]

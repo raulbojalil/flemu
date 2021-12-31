@@ -9,7 +9,7 @@ import 'game_details.dart';
 import 'game_list.dart';
 
 class GameListScreen extends StatefulWidget {
-  final String system;
+  final GameSystem system;
   const GameListScreen({Key? key, required this.system}) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class GameListScreen extends StatefulWidget {
 
 class _GameListScreenState extends State<GameListScreen> {
   String _selectedGame = "";
-  final String system;
+  final GameSystem system;
 
   _GameListScreenState({required this.system});
 
@@ -27,7 +27,7 @@ class _GameListScreenState extends State<GameListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(system.toUpperCase()),
+        title: Text(system.name),
       ),
       body: ResponsiveContainer(
           desktop: Row(
@@ -36,7 +36,7 @@ class _GameListScreenState extends State<GameListScreen> {
               Expanded(
                   flex: 4,
                   child: GameList(
-                      system: system,
+                      system: system.core,
                       onGameSelected: (game) {
                         setState(() {
                           _selectedGame = game;
@@ -50,12 +50,12 @@ class _GameListScreenState extends State<GameListScreen> {
                       child: GameDetails(
                         key: Key(_selectedGame),
                         game: _selectedGame,
-                        system: system,
+                        system: system.core,
                       )))
             ],
           ),
           mobile: GameList(
-              system: system,
+              system: system.core,
               onGameSelected: (String game) {
                 var emulatorUrl = "$backendUrl/?core=$system&filename=$game";
                 js.context.callMethod('open', [emulatorUrl]);

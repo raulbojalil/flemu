@@ -8,4 +8,7 @@ const secondaryBgColor = Color(0xFF202020);
 const searchBoxPadding = 30.0;
 const defaultPadding = 30.0;
 
+const mobileMaxWidth = 700;
+const desktopMinWidth = 1100;
+
 const backendUrl = "http://localhost:5000";

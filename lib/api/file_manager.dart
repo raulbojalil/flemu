@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class GameData {
+class GameSystem {
   final String name;
-  final String url;
+  final String core;
 
-  GameData({required this.name, required this.url});
+  GameSystem({required this.name, required this.core});
 }
 
 class FileManager {
@@ -16,15 +16,28 @@ class FileManager {
     return List<String>.from(gameList);
   }
 
+  static Future<List<GameSystem>> listSystems() async {
+    var gameList = await _httpRequest(
+        "http://localhost:5000/filemanager/systems", "get", {});
+
+    var list = gameList.map((x) =>
+        GameSystem(name: x["name"].toString(), core: x["core"].toString()));
+
+    return List<GameSystem>.from(list);
+  }
+
   static Future<http.Response> _getRequest(
       http.Client client, String method, String url, Object? body) async {
     var headers = {"content-type": "application/json"};
-    if (method == "post")
+    if (method == "post") {
       return await client.post(Uri.parse(url), body: body, headers: headers);
-    if (method == "put")
+    }
+    if (method == "put") {
       return await client.put(Uri.parse(url), body: body, headers: headers);
-    if (method == "patch")
+    }
+    if (method == "patch") {
       return await client.patch(Uri.parse(url), body: body, headers: headers);
+    }
 
     return await client.get(Uri.parse(url));
   }

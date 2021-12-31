@@ -1,5 +1,6 @@
 import 'package:flemu/constants.dart';
 import 'package:flemu/gamelist/game_list.dart';
+import 'package:flemu/system_list/system_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -44,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: GameListScreen(system: "snes"),
+      body: SystemListScreen(),
     );
   }
 }

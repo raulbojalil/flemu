@@ -1,6 +1,13 @@
 {
    "snes": "G:\\Games\\SNES",
    "nes": "G:\\Games\\NES",
+   "gb": "G:\\Games\\GB",
+   "gbc": "G:\\Games\\GBC",
    "gba": "G:\\Games\\GBA",
-   "nds": "G:\\Games\\NDS"
+   "nds": "G:\\Games\\NDS",
+   "n64": "G:\\Games\\N64",
+   "ps": "G:\\Games\\PSX",
+   "segaGG": "G:\\Games\\GG",
+   "segaMD": "G:\\Games\\MD",
+   "segaMS": "G:\\Games\\MS"
 }
