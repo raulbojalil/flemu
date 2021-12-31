@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
+
 class GameSystem {
   final String name;
   final String core;
@@ -11,14 +13,14 @@ class GameSystem {
 class FileManager {
   static Future<List<String>> listGames(String folder) async {
     var gameList = await _httpRequest(
-        "http://localhost:5000/filemanager/list?folder=" + folder, "get", {});
+        "$backendUrl/filemanager/list?folder=" + folder, "get", {});
 
     return List<String>.from(gameList);
   }
 
   static Future<List<GameSystem>> listSystems() async {
-    var gameList = await _httpRequest(
-        "http://localhost:5000/filemanager/systems", "get", {});
+    var gameList =
+        await _httpRequest("$backendUrl/filemanager/systems", "get", {});
 
     var list = gameList.map((x) =>
         GameSystem(name: x["name"].toString(), core: x["core"].toString()));

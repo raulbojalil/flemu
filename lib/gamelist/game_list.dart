@@ -24,6 +24,7 @@ class _GameListState extends State<GameList> {
   _GameListState({required this.system, required this.onGameSelected});
 
   List<String> _games = [];
+  String _filterText = "";
 
   Future<void> loadGames() async {
     var games = await FileManager.listGames(system);
@@ -46,7 +47,9 @@ class _GameListState extends State<GameList> {
           padding: const EdgeInsets.all(searchBoxPadding),
           child: TextField(
             onChanged: (text) {
-              //TODO: Implement the search
+              setState(() {
+                _filterText = text;
+              });
             },
             decoration: InputDecoration(
               border:
@@ -62,7 +65,11 @@ class _GameListState extends State<GameList> {
                   defaultPadding, 0, defaultPadding, defaultPadding * 2),
               child: ListView(
                 children: [
-                  for (var game in _games)
+                  for (var game in _games.where((element) =>
+                      _filterText == "" ||
+                      element
+                          .toLowerCase()
+                          .contains(_filterText.toLowerCase())))
                     ListTile(
                       title: Text(game),
                       onTap: () {
