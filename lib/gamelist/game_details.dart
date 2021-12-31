@@ -37,7 +37,7 @@ class _GameDetailsState extends State<GameDetails> {
                         loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
 
-                      return const Center(child: Text('Loading iamge...'));
+                      return const Center(child: Text('Loading image...'));
                     }))),
             const SizedBox(height: defaultPadding),
             Text(game, style: const TextStyle(fontSize: 30)),

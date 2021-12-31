@@ -1,0 +1,6 @@
+[
+   { name: "Super Nintendo Entertainment System", "core: "snes" },
+   { name: "Nintendo Entertainment System", "core: "nes" },
+   { name: "Gameboy Advance", "core: "gba" },
+   { name: "Nintendo DS", "core: "nds" },
+]

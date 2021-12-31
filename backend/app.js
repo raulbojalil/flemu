@@ -25,7 +25,7 @@ fs.readFile('./game_paths.json', 'utf8', (err, data) => {
 const getGameIdFromName = (system, name) => {
 
   const nameToLowerCase = name.toLowerCase().replace(", the", "");
-  const games = _gameDb[system].sort((a,b) => b.length - a.length);
+  const games = _gameDb[system].sort((a,b) => b.name.length - a.name.length);
 
   for(var i=0; i < games.length; i++) {
 
@@ -38,6 +38,12 @@ const getGameIdFromName = (system, name) => {
 
   return undefined;
 }
+
+app.get('/filemanager/systems', (req, res) => {
+  fs.readFile('./systems.json', 'utf8', (err, data) => {
+     res.json(JSON.parse(data));
+  });
+});
 
 app.get('/filemanager/image', (req, res) => {
 

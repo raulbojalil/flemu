@@ -7,24 +7,26 @@ import 'dart:js' as js;
 
 class GameList extends StatefulWidget {
   final Function onGameSelected;
+  final String system;
 
-  const GameList({required this.onGameSelected});
+  const GameList({required this.system, required this.onGameSelected});
 
   @override
   State<GameList> createState() =>
       // ignore: no_logic_in_create_state
-      _GameListState(onGameSelected: onGameSelected);
+      _GameListState(system: system, onGameSelected: onGameSelected);
 }
 
 class _GameListState extends State<GameList> {
   final Function onGameSelected;
+  final String system;
 
-  _GameListState({required this.onGameSelected});
+  _GameListState({required this.system, required this.onGameSelected});
 
   List<String> _games = [];
 
   Future<void> loadGames() async {
-    var games = await FileManager.listGames('snes');
+    var games = await FileManager.listGames(system);
 
     setState(() {
       _games = games;

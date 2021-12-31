@@ -27,7 +27,7 @@ class _GameListScreenState extends State<GameListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SNES"),
+        title: Text(system.toUpperCase()),
       ),
       body: ResponsiveContainer(
           desktop: Row(
@@ -35,11 +35,13 @@ class _GameListScreenState extends State<GameListScreen> {
             children: [
               Expanded(
                   flex: 4,
-                  child: GameList(onGameSelected: (game) {
-                    setState(() {
-                      _selectedGame = game;
-                    });
-                  })),
+                  child: GameList(
+                      system: system,
+                      onGameSelected: (game) {
+                        setState(() {
+                          _selectedGame = game;
+                        });
+                      })),
               Expanded(
                   flex: 2,
                   child: Container(
@@ -48,14 +50,16 @@ class _GameListScreenState extends State<GameListScreen> {
                       child: GameDetails(
                         key: Key(_selectedGame),
                         game: _selectedGame,
-                        system: "snes",
+                        system: system,
                       )))
             ],
           ),
-          mobile: GameList(onGameSelected: (String game) {
-            var emulatorUrl = "$backendUrl/?core=snes&filename=$game";
-            js.context.callMethod('open', [emulatorUrl]);
-          })), // This trailing comma makes auto-formatting nicer for build methods.
+          mobile: GameList(
+              system: system,
+              onGameSelected: (String game) {
+                var emulatorUrl = "$backendUrl/?core=$system&filename=$game";
+                js.context.callMethod('open', [emulatorUrl]);
+              })), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
