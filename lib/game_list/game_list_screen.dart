@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../api/file_manager.dart';
 import 'dart:js' as js;
 
+import '../app_config.dart';
 import 'game_details.dart';
 import 'game_list.dart';
 
@@ -57,7 +58,8 @@ class _GameListScreenState extends State<GameListScreen> {
           mobile: GameList(
               system: system.core,
               onGameSelected: (String game) {
-                var emulatorUrl = "$backendUrl/?core=$system&filename=$game";
+                var emulatorUrl =
+                    "${AppConfig.getInstance().apiUrl}/emulator/?core=$system&filename=$game";
                 js.context.callMethod('open', [emulatorUrl]);
               })), // This trailing comma makes auto-formatting nicer for build methods.
     );

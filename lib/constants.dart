@@ -10,5 +10,3 @@ const defaultPadding = 30.0;
 
 const mobileMaxWidth = 700;
 const desktopMinWidth = 1100;
-
-const backendUrl = "http://localhost:5000";

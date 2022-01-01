@@ -1,12 +1,11 @@
+import 'package:flemu/app_config.dart';
 import 'package:flemu/constants.dart';
-import 'package:flemu/gamelist/game_list.dart';
 import 'package:flemu/system_list/system_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'gamelist/game_list_screen.dart';
-
-void main() {
+void main({String? env}) async {
+  await AppConfig.forEnvironment(env);
   runApp(const MyApp());
 }
 
@@ -23,19 +22,15 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
             .apply(bodyColor: Colors.white),
         scaffoldBackgroundColor: primaryBgColor,
-        // textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-        //     .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

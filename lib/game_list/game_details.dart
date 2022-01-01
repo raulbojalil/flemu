@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../api/file_manager.dart';
 import 'dart:js' as js;
 
+import '../app_config.dart';
+
 class GameDetails extends StatefulWidget {
   final String game;
   final String system;
@@ -60,7 +62,7 @@ class _GameDetailsState extends State<GameDetails> {
                 child: Padding(
                     padding: EdgeInsets.all(30),
                     child: Image.network(
-                        "$backendUrl/filemanager/image?system=$system&name=$game",
+                        "${AppConfig.getInstance().apiUrl}/filemanager/image?system=$system&name=$game",
                         fit: BoxFit.fitWidth,
                         loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
@@ -92,7 +94,7 @@ class _GameDetailsState extends State<GameDetails> {
                         padding: const EdgeInsets.all(30)),
                     onPressed: () {
                       var emulatorUrl =
-                          "$backendUrl/?core=$system&filename=$game";
+                          "${AppConfig.getInstance().apiUrl}/emulator/?core=$system&filename=$game";
                       js.context.callMethod('open', [emulatorUrl]);
                     },
                     child: const Text("PLAY"))),

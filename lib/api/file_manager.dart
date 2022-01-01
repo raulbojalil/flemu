@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../constants.dart';
+import '../app_config.dart';
 
 class GameSystem {
   final String name;
@@ -20,7 +20,8 @@ class GameDescription {
 class FileManager {
   static Future<List<String>> listGames(String folder) async {
     var gameList = await _httpRequest(
-        "$backendUrl/filemanager/list?folder=$folder", "get", {});
+        "${AppConfig.getInstance().apiUrl}/filemanager/list?folder=$folder",
+        "get", {});
 
     return List<String>.from(gameList);
   }
@@ -28,7 +29,7 @@ class FileManager {
   static Future<List<GameDescription>> fetchGameDescription(
       String system, String name) async {
     var gameList = await _httpRequest(
-        "$backendUrl/filemanager/description?system=$system&name=$name",
+        "${AppConfig.getInstance().apiUrl}/filemanager/description?system=$system&name=$name",
         "get", {});
 
     var list = gameList.map((x) => GameDescription(
@@ -38,8 +39,8 @@ class FileManager {
   }
 
   static Future<List<GameSystem>> listSystems() async {
-    var gameList =
-        await _httpRequest("$backendUrl/filemanager/systems", "get", {});
+    var gameList = await _httpRequest(
+        "${AppConfig.getInstance().apiUrl}/filemanager/systems", "get", {});
 
     var list = gameList.map((x) =>
         GameSystem(name: x["name"].toString(), core: x["core"].toString()));

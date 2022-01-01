@@ -1,9 +1,5 @@
-import 'package:flemu/constants.dart';
-import 'package:flemu/responsive_container.dart';
 import 'package:flutter/material.dart';
-
 import '../api/file_manager.dart';
-import 'dart:js' as js;
 
 class SystemList extends StatefulWidget {
   final Function onSystemSelected;
