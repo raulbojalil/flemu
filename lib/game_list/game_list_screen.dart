@@ -59,7 +59,7 @@ class _GameListScreenState extends State<GameListScreen> {
               system: system.core,
               onGameSelected: (String game) {
                 var emulatorUrl =
-                    "${AppConfig.getInstance().apiUrl}/emulator/?core=$system&filename=$game";
+                    "${AppConfig.getInstance().apiUrl}/emulator/?core=${system.core}&filename=$game";
                 js.context.callMethod('open', [emulatorUrl]);
               })), // This trailing comma makes auto-formatting nicer for build methods.
     );
