@@ -1,18 +1,33 @@
 const client = require('https');
 const fs = require('fs');
 
-exports.downloadGameImage = function(gameId, outputFilepath) {
+const downloadGameImage = function(gameId, outputFilepath, region) {
+
+  region = region || 'us';
+
   return new Promise((resolve, reject) => {
-    const imageUrl = `https://www.screenscraper.fr/image.php?gameid=${gameId}&media=box-2D&hd=0&region=us&num=&version=&maxwidth=500`;
+    const imageUrl = `https://www.screenscraper.fr/image.php?gameid=${gameId}&media=box-2D&hd=0&region=${region}&num=&version=&maxwidth=500`;
 
     client.get(imageUrl, (imageRes) => {
       console.log(`Writing to ${outputFilepath}...`);
       imageRes.pipe(fs.createWriteStream(outputFilepath))
         .on('error', () => reject())
-        .once('close', () => resolve());
+        .once('close', () => {
+          fs.stat(outputFilepath, (err, stats) => {
+            if(stats.size < 2000 && region == 'us') {
+              downloadGameImage(gameId, outputFilepath, 'eu').then(() => resolve()).catch(() => reject());
+            } else if(stats.size < 2000 && region == 'eu') {
+              downloadGameImage(gameId, outputFilepath, 'jp').then(() => resolve()).catch(() => reject());
+            }
+            else resolve();
+          });
+          
+        });
     });
   });
 }
+
+exports.downloadGameImage = downloadGameImage;
 
 exports.downloadGameDescriptions = function(gameId, outputFilepath) {
   return new Promise((resolve, reject) => {
