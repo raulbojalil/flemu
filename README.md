@@ -1,6 +1,6 @@
 # Flemu
 
-A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emulatorjs) powered by Flutter and Screenscraper.fr (for automatic downloading of game boxes). No database needed.
+A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emulatorjs) powered by Flutter, Node.js and Screenscraper.fr (for automatic downloading of game boxes). No database needed.
 
 ## Getting started
 
@@ -15,16 +15,17 @@ A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emul
 }
 ``
 
-* Using the CLI, go to the `` flemu\backend `` directory and run ``npm install``
+* Using a termina, go to the `` flemu\backend `` directory and run ``npm install``
 * Run ``npm start`` to start the Node.js backend server.
 * Run the Flutter app using Visual Studio Code in Web mode (use Chrome (web-javascript))
 
 ### How to build for release
 
 * Run the build.bat script
-* Copy the `` build\web `` directory to your server
+* Copy the `` build\web `` directory to your server (make sure Node.js is installed on your server)
 * Configure your game folders in game_paths.json
 * Start the server by running ``npm start`` (or use pm2/forever/nginx etc.)
+* Set the PORT env variable to set to another port other than 5000
 
 ## Screenshots
 
