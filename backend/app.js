@@ -7,6 +7,8 @@ const cors = require('cors');
 const path = require('path');
 const client = require('https');
 
+const screenscraper = require('./screenscraper');
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(cors());
@@ -45,6 +47,37 @@ app.get('/filemanager/systems', (req, res) => {
   });
 });
 
+app.get('/filemanager/description', (req, res) => {
+  
+  const system = req.query.system;
+  const cachedDescriptionsFolder = __dirname + '/descriptions/' + system;
+  const cachedFilename = path.join(cachedDescriptionsFolder, req.query.name + '.json');
+
+  if(!fs.existsSync(cachedDescriptionsFolder)) {
+    fs.mkdirSync(cachedDescriptionsFolder, { recursive: true });
+  }
+
+  if (fs.existsSync(cachedFilename)) {
+    fs.readFile(cachedFilename, 'utf8', (err, data) => {
+      res.json(JSON.parse(data));
+    });
+  } else {
+    const gameId = getGameIdFromName(system, req.query.name);
+
+    if(!gameId) {
+      res.json([]);
+      return;
+    }
+
+    screenscraper.downloadGameDescriptions(gameId, cachedFilename).then(() => {
+      fs.readFile(cachedFilename, 'utf8', (err, data) => {
+        res.json(JSON.parse(data));
+      });
+    });
+  }
+
+});
+
 app.get('/filemanager/image', (req, res) => {
 
   const system = req.query.system;
@@ -54,7 +87,7 @@ app.get('/filemanager/image', (req, res) => {
   const cachedFilename = path.join(cachedImagesFolder, req.query.name + '.jpg');
 
   if(!fs.existsSync(cachedImagesFolder)) {
-    fs.mkdirSync(cachedImagesFolder);
+    fs.mkdirSync(cachedImagesFolder, { recursive: true });
   }
 
   if (fs.existsSync(cachedFilename)) {
@@ -69,15 +102,10 @@ app.get('/filemanager/image', (req, res) => {
     return;
   }
 
-  const imageUrl = `https://www.screenscraper.fr/image.php?gameid=${gameId}&media=box-2D&hd=0&region=us&num=&version=&maxwidth=500`;
-
-  client.get(imageUrl, (imageRes) => {
-    console.log(`Writing to ${cachedFilename}...`);
-    imageRes.pipe(fs.createWriteStream(cachedFilename))
-      .on('error', () => res.sendFile(fallbackImage))
-      .once('close', () => res.sendFile(cachedFilename));
+  screenscraper.downloadGameImage(gameId, cachedFilename).then(() => {
+    res.sendFile(cachedFilename);
   });
- 
+
 });
 
 app.get('/filemanager/download', (req, res) => {

@@ -21,12 +21,40 @@ class _GameDetailsState extends State<GameDetails> {
   final String game;
   final String system;
 
+  bool _loadingDescription = false;
+  List<GameDescription> _description = [];
+
   _GameDetailsState({required this.game, required this.system});
+
+  void loadDescription() async {
+    setState(() {
+      _loadingDescription = true;
+    });
+
+    List<GameDescription> description = [];
+    try {
+      description = await FileManager.fetchGameDescription(system, game);
+    } catch (e) {
+      description = [
+        GameDescription(lang: "en", description: "Error loading description")
+      ];
+      print(e);
+    }
+    setState(() {
+      _description = description;
+      _loadingDescription = false;
+    });
+  }
+
+  @override
+  void initState() {
+    loadDescription();
+  }
 
   @override
   Widget build(BuildContext context) {
     return game == null || game == ""
-        ? Center(child: Text("Select a game"))
+        ? const Center(child: Text("Select a game"))
         : Column(children: [
             Expanded(
                 child: Padding(
@@ -46,16 +74,22 @@ class _GameDetailsState extends State<GameDetails> {
                 height: 100,
                 child: SingleChildScrollView(
                   controller: ScrollController(),
-                  child: Text(
-                      "This is a placeholder for the description of the game. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+                  child: _loadingDescription
+                      ? const Text("Loading description...")
+                      : (Text(_description.isEmpty
+                          ? "No description"
+                          : _description.firstWhere((x) => x.lang == 'en',
+                              orElse: () {
+                              return _description[0];
+                            }).description)),
                 )),
             const SizedBox(height: defaultPadding),
             SizedBox(
                 height: 100,
                 child: ElevatedButton(
                     style: TextButton.styleFrom(
-                        textStyle: TextStyle(fontSize: 30),
-                        padding: EdgeInsets.all(30)),
+                        textStyle: const TextStyle(fontSize: 30),
+                        padding: const EdgeInsets.all(30)),
                     onPressed: () {
                       var emulatorUrl =
                           "$backendUrl/?core=$system&filename=$game";
