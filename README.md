@@ -15,11 +15,11 @@ A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emul
 }
 ``
 
-* Using a termina, go to the `` flemu\backend `` directory and run ``npm install``
-* Run ``npm start`` to start the Node.js backend server.
+* Open a terminal and go to the `` flemu\backend `` directory. Run ``npm install``.
+* After the packages are installed, run ``npm start`` to start the Node.js backend server.
 * Run the Flutter app using Visual Studio Code in Web mode (use Chrome (web-javascript))
 
-### How to build for release
+### How to create a release build
 
 * Run the build.bat script
 * Copy the `` build\web `` directory to your server (make sure Node.js is installed on your server)
