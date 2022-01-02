@@ -7385,9 +7385,9 @@
 { "id": "59515", "name": "Michael Owen's Wls 2000" }, 
 { "id": "59516", "name": "Tetris 64" }, 
 { "id": "5631", "name": "Tetrisphere" }, 
-{ "id": "5394", "name": "Legend Of Zelda - Majora's Mask, The" }, 
-{ "id": "5395", "name": "Legend Of Zelda - Ocarina Of Time, The" }, 
-{ "id": "98597", "name": "Legend Of Zelda - Ocarina Of Time Master Quest, The" }, 
+{ "id": "5394", "name": "Legend of Zelda, The - Majora's Mask" }, 
+{ "id": "5395", "name": "Legend of Zelda, The - Ocarina of Time" }, 
+{ "id": "98597", "name": "Legend of Zelda, The - Ocarina of Time - Master Quest" }, 
 { "id": "5559", "name": "New Tetris, The" }, 
 { "id": "5620", "name": "Powerpuff Girls - Chemical X-traction, The" }, 
 { "id": "5605", "name": "Tom And Jerry In Fists Of Furry" }, 
@@ -13229,7 +13229,7 @@
 { "id": "47067", "name": "Samurai Shodown! - Pocket Fighting Series" }, 
 { "id": "47062", "name": "Shougi No Tatsujin" }
 ],
-"ps" : [
+"psx" : [
 { "id": "108771", "name": "'98 Koshien" }, 
 { "id": "106600", "name": "'99 Koshien" }, 
 { "id": "107144", "name": "0 Kara No Shogi - Shogi Youchien Ayumi-gumi" }, 
@@ -13288,7 +13288,7 @@
 { "id": "20252", "name": "Iron And Blood - Warriors Of Ravenloft" }, 
 { "id": "20253", "name": "Advanced V.g." }, 
 { "id": "20050", "name": "Advanced V.g. 2" }, 
-{ "id": "152581", "name": "Adventure Of Puppet Princess ,the" }, 
+{ "id": "152581", "name": "Adventure Of Puppet Princess, The" }, 
 { "id": "195054", "name": "Aeon Flux" }, 
 { "id": "109311", "name": "Afl 99" }, 
 { "id": "108857", "name": "Afraid Gear" }, 

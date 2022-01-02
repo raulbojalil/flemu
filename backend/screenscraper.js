@@ -18,6 +18,12 @@ const downloadGameImage = function(gameId, outputFilepath, region) {
               downloadGameImage(gameId, outputFilepath, 'eu').then(() => resolve()).catch(() => reject());
             } else if(stats.size < 2000 && region == 'eu') {
               downloadGameImage(gameId, outputFilepath, 'jp').then(() => resolve()).catch(() => reject());
+            } else if(stats.size < 2000 && region == 'jp') {
+              downloadGameImage(gameId, outputFilepath, 'wor').then(() => resolve()).catch(() => reject());
+            } else if(stats.size < 2000 && region == 'wor') {
+              downloadGameImage(gameId, outputFilepath, 'fr').then(() => resolve()).catch(() => reject());
+            } else if(stats.size < 2000 && region == 'fr') {
+              downloadGameImage(gameId, outputFilepath, 'de').then(() => resolve()).catch(() => reject());
             }
             else resolve();
           });

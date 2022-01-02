@@ -3,6 +3,7 @@ import 'package:flemu/system_list/system_list.dart';
 import 'package:flutter/material.dart';
 
 import '../api/file_manager.dart';
+import 'dart:js' as js;
 
 class SystemListScreen extends StatefulWidget {
   const SystemListScreen({Key? key}) : super(key: key);
@@ -16,7 +17,14 @@ class _SystemListScreenState extends State<SystemListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Select a system')),
+      appBar: AppBar(title: const Text('Select a system'), actions: [
+        IconButton(
+          icon: const Icon(Icons.fullscreen),
+          onPressed: () {
+            js.context.callMethod('toggleFullscreen');
+          },
+        ),
+      ]),
       body: SystemList(onSystemSelected: (GameSystem system) {
         Navigator.push(
           context,

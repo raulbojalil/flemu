@@ -27,9 +27,14 @@ class _GameListScreenState extends State<GameListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(system.name),
-      ),
+      appBar: AppBar(title: Text(system.name), actions: [
+        IconButton(
+          icon: const Icon(Icons.fullscreen),
+          onPressed: () {
+            js.context.callMethod('toggleFullscreen');
+          },
+        ),
+      ]),
       body: ResponsiveContainer(
           desktop: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
