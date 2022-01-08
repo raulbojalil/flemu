@@ -126,6 +126,7 @@ exports.saveState = (req, res) => {
     fs.mkdirSync(savesFolder, { recursive: true });
   }
 
+  console.log(`Writing ${saveState}...`);
   fs.writeFile(saveState, state, 'utf-8', () => {
      res.json({});
   });
@@ -146,6 +147,7 @@ exports.loadState = (req, res) => {
     return;
   }
 
+  console.log(`Reading ${saveState}...`);
   fs.readFile(saveState, 'utf8', (err, data) => {
      res.json({ state: data });
   });

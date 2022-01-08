@@ -49,3 +49,6 @@ app.*.map.json
 /backend/images
 /backend/descriptions
 /backend/saves
+
+/windows
+/linux
