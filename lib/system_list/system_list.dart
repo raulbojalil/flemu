@@ -1,4 +1,7 @@
+import 'package:flemu/common/error_message.dart';
+import 'package:flemu/common/skeleton_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletons/skeletons.dart';
 import '../api/file_manager.dart';
 
 class SystemList extends StatefulWidget {
@@ -17,14 +20,31 @@ class _SystemListState extends State<SystemList> {
 
   _SystemListState({required this.onSystemSelected});
 
+  bool _isLoading = true;
+  bool _hasError = false;
   List<GameSystem> _systems = [];
 
   Future<void> loadSystems() async {
-    var systems = await FileManager.listSystems();
-
     setState(() {
-      _systems = systems;
+      _hasError = false;
+      _isLoading = true;
     });
+
+    try {
+      var systems = await FileManager.listSystems();
+
+      setState(() {
+        _systems = systems;
+      });
+    } catch (e) {
+      setState(() {
+        _hasError = true;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -35,14 +55,18 @@ class _SystemListState extends State<SystemList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      for (var system in _systems)
-        ListTile(
-          title: Text(system.name),
-          onTap: () {
-            onSystemSelected(system);
-          },
-        ),
-    ]);
+    return _isLoading
+        ? const SkeletonLoader()
+        : _hasError
+            ? const ErrorMessage()
+            : ListView(children: [
+                for (var system in _systems)
+                  ListTile(
+                    title: Text(system.name),
+                    onTap: () {
+                      onSystemSelected(system);
+                    },
+                  ),
+              ]);
   }
 }

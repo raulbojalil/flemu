@@ -103,7 +103,7 @@ exports.getImage = (req, res) => {
 
 exports.downloadFile = (req, res) => {
   const folder = _gameFolders[req.query.folder];  
-  res.sendFile(path.join(folder, req.query.filename));
+  res.download(path.join(folder, req.query.filename), req.query.filename);
 };
 
 exports.listFolderContents = (req, res) => {

@@ -86,18 +86,37 @@ class _GameDetailsState extends State<GameDetails> {
                             }).description)),
                 )),
             const SizedBox(height: defaultPadding),
-            SizedBox(
-                height: 100,
-                child: ElevatedButton(
-                    style: TextButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 30),
-                        padding: const EdgeInsets.all(30)),
-                    onPressed: () {
-                      var emulatorUrl =
-                          "${AppConfig.getInstance().apiUrl}/emulator/?core=$system&filename=$game";
-                      js.context.callMethod('open', [emulatorUrl]);
-                    },
-                    child: const Text("PLAY"))),
+            Row(
+              children: [
+                Expanded(
+                    child: SizedBox(
+                        height: 80,
+                        child: ElevatedButton(
+                            style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 30),
+                                padding: const EdgeInsets.all(30)),
+                            onPressed: () {
+                              var emulatorUrl =
+                                  "${AppConfig.getInstance().apiUrl}/emulator/?core=$system&filename=$game";
+                              js.context.callMethod('open', [emulatorUrl]);
+                            },
+                            child: const Text("PLAY")))),
+                Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SizedBox(
+                        height: 80,
+                        child: ElevatedButton(
+                            style: TextButton.styleFrom(
+                                textStyle: const TextStyle(fontSize: 20),
+                                padding: const EdgeInsets.all(20)),
+                            onPressed: () {
+                              var emulatorUrl =
+                                  "${AppConfig.getInstance().apiUrl}/filemanager/download?folder=$system&filename=$game";
+                              js.context.callMethod('open', [emulatorUrl]);
+                            },
+                            child: const Icon(Icons.download)))),
+              ],
+            ),
           ]);
   }
 }
