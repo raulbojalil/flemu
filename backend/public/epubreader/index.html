@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EPUB</title>
+    <script src="epub.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+</head>
+<body>
+    <div id="viewer"></div>
+    <div id="prev" class="arrow">‹</div>
+    <div id="next" class="arrow">›</div>
+    <script>
+
+        var book = ePub();
+        var rendition;
+
+        function openBook(bookData, url) {
+            
+            var title = document.getElementById("title");
+            var next = document.getElementById("next");
+            var prev = document.getElementById("prev");
+
+            book.open(bookData);
+
+            rendition = book.renderTo("viewer", {
+                width: "100%",
+                height: 600
+            });
+
+            rendition.display();
+
+            var keyListener = function (e) {
+
+                // Left Key
+                if ((e.keyCode || e.which) == 37) {
+                    rendition.prev();
+                }
+
+                // Right Key
+                if ((e.keyCode || e.which) == 39) {
+                    rendition.next();
+                }
+
+            };
+
+            rendition.on("keyup", keyListener);
+            rendition.on("relocated", function (location) {
+                //TODO: Save the location in the server
+            });
+
+            next.addEventListener("click", function (e) {
+                rendition.next();
+                e.preventDefault();
+            }, false);
+
+            prev.addEventListener("click", function (e) {
+                rendition.prev();
+                e.preventDefault();
+            }, false);
+
+            document.addEventListener("keyup", keyListener, false);
+        }
+
+	const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/filemanager/download?folder=epub&filename=" + params.filename);
+        xhr.responseType = "arraybuffer";
+
+        xhr.onload = function () {
+            if (this.status === 200) {
+                openBook(xhr.response, "");
+            }
+        };
+        xhr.send();
+
+
+    </script>
+
+</body>
+</html>

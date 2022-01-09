@@ -61,8 +61,7 @@ class _GameDetailsState extends State<GameDetails> {
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.all(30),
-                    child: Image.network(
-                        "${AppConfig.getInstance().apiUrl}/filemanager/image?system=$system&name=$game",
+                    child: Image.network(buildImageUrl(system, game),
                         fit: BoxFit.fitWidth,
                         loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
@@ -96,9 +95,8 @@ class _GameDetailsState extends State<GameDetails> {
                                 textStyle: const TextStyle(fontSize: 30),
                                 padding: const EdgeInsets.all(30)),
                             onPressed: () {
-                              var emulatorUrl =
-                                  "${AppConfig.getInstance().apiUrl}/emulator/?core=$system&filename=$game";
-                              js.context.callMethod('open', [emulatorUrl]);
+                              js.context.callMethod(
+                                  'open', [buildFileHandlerUrl(system, game)]);
                             },
                             child: const Text("PLAY")))),
                 Padding(
@@ -110,9 +108,8 @@ class _GameDetailsState extends State<GameDetails> {
                                 textStyle: const TextStyle(fontSize: 20),
                                 padding: const EdgeInsets.all(20)),
                             onPressed: () {
-                              var emulatorUrl =
-                                  "${AppConfig.getInstance().apiUrl}/filemanager/download?folder=$system&filename=$game";
-                              js.context.callMethod('open', [emulatorUrl]);
+                              js.context.callMethod(
+                                  'open', [buildDownloadUrl(system, game)]);
                             },
                             child: const Icon(Icons.download)))),
               ],

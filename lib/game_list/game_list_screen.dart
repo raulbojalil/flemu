@@ -63,9 +63,8 @@ class _GameListScreenState extends State<GameListScreen> {
           mobile: GameList(
               system: system.core,
               onGameSelected: (String game) {
-                var emulatorUrl =
-                    "${AppConfig.getInstance().apiUrl}/emulator/?core=${system.core}&filename=$game";
-                js.context.callMethod('open', [emulatorUrl]);
+                js.context.callMethod(
+                    'open', [buildFileHandlerUrl(system.core, game)]);
               })), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

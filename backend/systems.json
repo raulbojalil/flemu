@@ -24,5 +24,6 @@
    { "name": "WonderSwan Color", "core": "wsc" },
    { "name": "TurboGrafx-16 / PC Engine", "core": "pce" },
    { "name": "Arcade", "core": "arcade" },
-   { "name": "Atari 2600", "core": "atari2600" }
+   { "name": "Atari 2600", "core": "atari2600" },
+   { "name": "EPUB", "core": "epub" }
 ]
