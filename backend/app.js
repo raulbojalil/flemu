@@ -6,7 +6,7 @@ const cors = require('cors');
 const nocache = require('nocache');
 
 app.use(express.static(__dirname + '/public'));
-app.use(express.json());
+app.use(express.json({ limit: 30000000 }));
 app.use(cors());
 app.use(nocache());
 
