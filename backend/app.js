@@ -3,10 +3,12 @@ const PORT = process.env.PORT || 5000;
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const nocache = require('nocache');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(cors());
+app.use(nocache());
 
 const filemanager = require('./filemanager');
 
