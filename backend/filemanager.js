@@ -36,6 +36,14 @@ const getGameIdFromName = (system, name) => {
   return undefined;
 }
 
+const getSystemPlatformId = (system) => {
+  const systemData = _systems.find(x => x.core === system);
+
+  if(systemData) return systemData.ssPlatformId;
+
+  return undefined;
+};
+
 exports.getSystems = (req, res) => {
   res.json(_systems);
 };
@@ -96,6 +104,42 @@ exports.getImage = (req, res) => {
   }
 
   screenscraper.downloadGameImage(gameId, cachedFilename).then(() => {
+    res.sendFile(cachedFilename);
+  });
+
+};
+
+exports.getSystemImage = (req, res) => {
+
+  const system = req.query.system;
+
+  if(system === 'epub') {
+    res.sendFile(__dirname + '/epub.png');
+    return;
+  }
+
+  const fallbackImage = __dirname + '/question_mark.png';
+
+  const cachedImagesFolder = __dirname + '/system_images/' + system;
+  const cachedFilename = path.join(cachedImagesFolder, 'logo.png');
+
+  if (!fs.existsSync(cachedImagesFolder)) {
+    fs.mkdirSync(cachedImagesFolder, { recursive: true });
+  }
+
+  if (fs.existsSync(cachedFilename)) {
+    res.sendFile(cachedFilename);
+    return;
+  }
+
+  const systemId = getSystemPlatformId(system);
+
+  if(!systemId) {
+    res.sendFile(fallbackImage);
+    return;
+  }
+
+  screenscraper.downloadSystemImage(systemId, cachedFilename).then(() => {
     res.sendFile(cachedFilename);
   });
 

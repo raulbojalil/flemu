@@ -18,6 +18,10 @@ buildImageUrl(String system, String name) {
   return "${AppConfig.getInstance().apiUrl}/filemanager/image?system=$system&name=$name";
 }
 
+buildSystemImageUrl(String system) {
+  return "${AppConfig.getInstance().apiUrl}/filemanager/systemimage?system=$system";
+}
+
 buildEmulatorUrl(String core, String filename) {
   return "${AppConfig.getInstance().apiUrl}/emulator?core=$core&filename=$filename";
 }

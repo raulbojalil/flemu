@@ -18,6 +18,8 @@ app.get('/filemanager/systems', filemanager.getSystems);
 app.get('/filemanager/description', filemanager.getDescription);
 //GET /filemanager/image?system=&name=
 app.get('/filemanager/image', filemanager.getImage);
+//GET /filemanager/systemimage?system=
+app.get('/filemanager/systemimage', filemanager.getSystemImage);
 //GET /filemanager/download?folder=&filename=
 app.get('/filemanager/download', filemanager.downloadFile);
 //GET /filemanager/list?folder=

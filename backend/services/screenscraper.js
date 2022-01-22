@@ -33,6 +33,20 @@ const downloadGameImage = function(gameId, outputFilepath, region) {
   });
 }
 
+exports.downloadSystemImage = function(systemId, outputFilepath) {
+  return new Promise((resolve, reject) => {
+    const imageUrl = `https://www.screenscraper.fr/image.php?plateformid=${systemId}&media=wheel&region=wor&num=&version=&maxwidth=500&maxheight=500`;
+    client.get(imageUrl, (imageRes) => {
+      console.log(`Writing to ${outputFilepath}...`);
+      imageRes.pipe(fs.createWriteStream(outputFilepath))
+        .on('error', () => reject())
+        .once('close', () => {
+          resolve();
+        });
+    });
+  });
+}
+
 exports.downloadGameImage = downloadGameImage;
 
 exports.downloadGameDescriptions = function(gameId, outputFilepath) {
