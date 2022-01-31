@@ -1,6 +1,6 @@
 # Flemu
 
-A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emulatorjs) powered by Flutter, Node.js and Screenscraper.fr (for automatic downloading of game boxes). No database needed.
+A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emulatorjs) powered by Flutter, Node.js and Screenscraper.fr (for automatic downloading of game boxes). No database is required. Supports all the systems that Emulator.js supports plus MS-DOS through js-dos.
 
 ## Getting started
 
@@ -27,6 +27,10 @@ A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emul
 * Configure your game folders in game_paths.json
 * Start the server by running ``npm start`` (or use pm2/forever/nginx etc.)
 * Set the PORT env variable to set to another port other than 5000
+
+### MS-DOS Support
+
+MS-DOS support is achieved using [js-dos](https://js-dos.com/v7/build/). Place .jsdos bundle files in your DOS game folder.
 
 ## Screenshots
 
