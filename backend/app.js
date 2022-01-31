@@ -20,9 +20,9 @@ app.get('/filemanager/description', filemanager.getDescription);
 app.get('/filemanager/image', filemanager.getImage);
 //GET /filemanager/systemimage?system=
 app.get('/filemanager/systemimage', filemanager.getSystemImage);
-//GET /filemanager/download?folder=&filename=
+//GET /filemanager/download?system=&filename=
 app.get('/filemanager/download', filemanager.downloadFile);
-//GET /filemanager/list?folder=
+//GET /filemanager/list?system=
 app.get('/filemanager/list', filemanager.listFolderContents);
 //POST /filemanager/savestate { system, name, state, screenshot }
 app.post('/filemanager/savestate', filemanager.saveState);

@@ -9,7 +9,7 @@ import '../app_config.dart';
 
 class GameDetails extends StatefulWidget {
   final String game;
-  final String system;
+  final GameSystem system;
 
   GameDetails({Key? key, required this.system, required this.game})
       : super(key: key);
@@ -21,7 +21,7 @@ class GameDetails extends StatefulWidget {
 
 class _GameDetailsState extends State<GameDetails> {
   final String game;
-  final String system;
+  final GameSystem system;
 
   bool _loadingDescription = false;
   List<GameDescription> _description = [];
@@ -35,7 +35,7 @@ class _GameDetailsState extends State<GameDetails> {
 
     List<GameDescription> description = [];
     try {
-      description = await FileManager.fetchGameDescription(system, game);
+      description = await FileManager.fetchGameDescription(system.id, game);
     } catch (e) {
       description = [
         GameDescription(lang: "en", description: "Error loading description")
@@ -61,7 +61,7 @@ class _GameDetailsState extends State<GameDetails> {
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.all(30),
-                    child: Image.network(buildImageUrl(system, game),
+                    child: Image.network(buildImageUrl(system.id, game),
                         fit: BoxFit.fitWidth,
                         loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
@@ -95,8 +95,10 @@ class _GameDetailsState extends State<GameDetails> {
                                 textStyle: const TextStyle(fontSize: 30),
                                 padding: const EdgeInsets.all(30)),
                             onPressed: () {
-                              js.context.callMethod(
-                                  'open', [buildFileHandlerUrl(system, game)]);
+                              js.context.callMethod('open', [
+                                buildFileHandlerUrl(
+                                    system.handler, game, system.bios)
+                              ]);
                             },
                             child: const Text("PLAY")))),
                 Padding(
@@ -109,7 +111,7 @@ class _GameDetailsState extends State<GameDetails> {
                                 padding: const EdgeInsets.all(20)),
                             onPressed: () {
                               js.context.callMethod(
-                                  'open', [buildDownloadUrl(system, game)]);
+                                  'open', [buildDownloadUrl(system.id, game)]);
                             },
                             child: const Icon(Icons.download)))),
               ],

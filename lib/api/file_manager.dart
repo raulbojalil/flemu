@@ -4,10 +4,16 @@ import 'package:http/http.dart' as http;
 import '../app_config.dart';
 
 class GameSystem {
+  final String id;
   final String name;
-  final String core;
+  final String handler;
+  final String bios;
 
-  GameSystem({required this.name, required this.core});
+  GameSystem(
+      {required this.id,
+      required this.name,
+      required this.handler,
+      required this.bios});
 }
 
 class GameDescription {
@@ -18,9 +24,9 @@ class GameDescription {
 }
 
 class FileManager {
-  static Future<List<String>> listGames(String folder) async {
+  static Future<List<String>> listGames(String system) async {
     var gameList = await _httpRequest(
-        "${AppConfig.getInstance().apiUrl}/filemanager/list?folder=$folder",
+        "${AppConfig.getInstance().apiUrl}/filemanager/list?system=$system",
         "get", {});
 
     return List<String>.from(gameList);
@@ -42,8 +48,11 @@ class FileManager {
     var gameList = await _httpRequest(
         "${AppConfig.getInstance().apiUrl}/filemanager/systems", "get", {});
 
-    var list = gameList.map((x) =>
-        GameSystem(name: x["name"].toString(), core: x["core"].toString()));
+    var list = gameList.map((x) => GameSystem(
+        id: x["id"].toString(),
+        name: x["name"].toString(),
+        handler: x["handler"]?.toString() ?? "",
+        bios: x["bios"]?.toString() ?? ""));
 
     return List<GameSystem>.from(list);
   }

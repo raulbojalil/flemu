@@ -9,7 +9,7 @@ import 'dart:js' as js;
 
 class GameList extends StatefulWidget {
   final Function onGameSelected;
-  final String system;
+  final GameSystem system;
 
   const GameList({required this.system, required this.onGameSelected});
 
@@ -21,7 +21,7 @@ class GameList extends StatefulWidget {
 
 class _GameListState extends State<GameList> {
   final Function onGameSelected;
-  final String system;
+  final GameSystem system;
 
   _GameListState({required this.system, required this.onGameSelected});
 
@@ -36,7 +36,7 @@ class _GameListState extends State<GameList> {
     });
 
     try {
-      var games = await FileManager.listGames(system);
+      var games = await FileManager.listGames(system.id);
       setState(() {
         _games = games;
       });

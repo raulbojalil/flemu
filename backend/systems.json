@@ -1,30 +1,212 @@
 [
-   { "name": "Nintendo Entertainment System", "core": "nes", "ssPlatformId": "3" },
-   { "name": "Super Nintendo Entertainment System", "core": "snes", "ssPlatformId": "4" },
-   { "name": "Nintendo 64", "core": "n64", "ssPlatformId": "14" },
-   { "name": "Gameboy", "core": "gb", "ssPlatformId": "9" },
-   { "name": "Gameboy Color", "core": "gbc", "ssPlatformId": "10" },
-   { "name": "Gameboy Advance", "core": "gba", "ssPlatformId": "12" },
-   { "name": "Nintendo DS", "core": "nds", "ssPlatformId": "15" },
-   { "name": "PlayStation", "core": "psx", "ssPlatformId": "57" },
-   { "name": "Virtual Boy", "core": "vb", "ssPlatformId": "11" },
-   { "name": "Sega Mega Drive", "core": "segaMD", "ssPlatformId": "1" },
-   { "name": "Sega Master System", "core": "segaMS", "ssPlatformId": "2" },
-   { "name": "Sega CD", "core": "segaCD", "ssPlatformId": "20" },
-   { "name": "Atari Lynx", "core": "lynx", "ssPlatformId": "28"},
-   { "name": "MSX", "core": "msx", "ssPlatformId": "113" },
-   { "name": "3DO", "core": "3do", "ssPlatformId": "29" },
-   { "name": "Sega 32X", "core": "sega32x", "ssPlatformId": "19" },
-   { "name": "Atari Jaguar", "core": "jaguar", "ssPlatformId": "27" },
-   { "name": "Neo Geo Pocket", "core": "ngp", "ssPlatformId": "25" },
-   { "name": "Sega Game Gear", "core": "segaGG", "ssPlatformId": "21" },
-   { "name": "Sega Saturn", "core": "segaSaturn", "ssPlatformId": "22" },
-   { "name": "Atari 7800", "core": "atari7800", "ssPlatformId": "41" },
-   { "name": "WonderSwan", "core": "ws", "ssPlatformId": "45" },
-   { "name": "WonderSwan Color", "core": "wsc", "ssPlatformId": "46" },
-   { "name": "TurboGrafx-16 / PC Engine", "core": "pce", "ssPlatformId": "31" },
-   { "name": "IGS", "core": "igs", "ssPlatformId": "176" },
-   { "name": "Neo Geo", "core": "neogeo", "ssPlatformId": "142" },
-   { "name": "Atari 2600", "core": "atari2600", "ssPlatformId": "26" },
-   { "name": "EPUB", "core": "epub", "ssPlatformId": "-1" }
+   { 
+      "id": "nes",
+      "name": "Nintendo Entertainment System",
+      "ssPlatformId": "3",
+      "path": "G:\\Games\\NES\\",
+      "handler": "/emulator/?core=nes"
+   },
+   { 
+      "id": "snes",
+      "name": "Super Nintendo Entertainment System", 
+      "ssPlatformId": "4",
+      "path": "G:\\Games\\SNES\\",
+      "handler": "/emulator/?core=snes"
+   },
+   {
+      "id": "n64", 
+      "name": "Nintendo 64",  
+      "path": "G:\\Games\\N64",
+      "ssPlatformId": "14",
+      "handler": "/emulator/?core=n64"
+   },
+   { 
+      "id": "gb",
+      "name": "Gameboy", 
+      "path": "G:\\Games\\GB",
+      "ssPlatformId": "9",
+      "handler": "/emulator/?core=gb"
+   },
+   { 
+      "id": "gbc",
+      "name": "Gameboy Color",  
+      "ssPlatformId": "10",
+      "path": "G:\\Games\\GBC",
+      "handler": "/emulator/?core=gb&folder=gbc"
+   },
+   { 
+      "id": "gba",
+      "name": "Gameboy Advance", 
+      "path": "G:\\Games\\GBA",
+      "ssPlatformId": "12",
+      "handler": "/emulator/?core=gba"
+   },
+   { 
+      "id": "nds",
+      "name": "Nintendo DS", 
+      "path": "G:\\Games\\NDS",
+      "handler": "/emulator/?core=nds",
+      "ssPlatformId": "15" 
+   },
+   { 
+      "id": "psx",
+      "name": "PlayStation", 
+      "path": "G:\\Games\\PSX",
+      "ssPlatformId": "57",
+      "handler": "/emulator/?core=psx",
+      "bios": "/bios/scph5501.bin"
+   },
+   { 
+      "id": "vb",
+      "name": "Virtual Boy", 
+      "handler": "/emulator/?core=vb",
+      "path": "G:\\Games\\VB",
+      "ssPlatformId": "11" 
+   },
+   { 
+      "id": "segaMD", 
+      "name": "Sega Mega Drive", 
+      "handler": "/emulator/?core=segaMD",
+      "path": "G:\\Games\\Genesis",
+      "ssPlatformId": "1" 
+   },
+   { 
+      "id": "segaMS",
+      "name": "Sega Master System", 
+      "path": "G:\\Games\\SMS",
+      "handler": "/emulator/?core=segaMS",
+      "ssPlatformId": "2" 
+   },
+   { 
+      "id": "segaCD", 
+      "name": "Sega CD", 
+      "handler": "/emulator/?core=segaCD",
+      "path": "G:\\Games\\SCD",
+      "ssPlatformId": "20" 
+   },
+   { 
+      "id": "lynx", 
+      "name": "Atari Lynx", 
+      "handler": "/emulator/?core=lynx",
+      "path": "G:\\Games\\Lynx",
+      "ssPlatformId": "28"
+   },
+   { 
+      "id": "msx",
+      "name": "MSX",  
+      "handler": "/emulator/?core=msx",
+      "path": "G:\\Games\\MSX",
+      "ssPlatformId": "113" 
+   },
+   { 
+      "id": "3do",
+      "name": "3DO", 
+      "handler": "/emulator/?core=3do",
+      "path": "G:\\Games\\3DO",
+      "ssPlatformId": "29" 
+   },
+   { 
+      "id": "sega32x", 
+      "name": "Sega 32X", 
+      "ssPlatformId": "19",
+      "handler": "/emulator/?core=sega32x",
+      "path": "G:\\Games\\32X"
+   },
+   { 
+      "id": "jaguar",
+      "name": "Atari Jaguar", 
+      "ssPlatformId": "27",
+      "handler": "/emulator/?core=jaguar",
+      "path": "G:\\Games\\Jaguar"
+   },
+   { 
+      "id": "ngp",
+      "name": "Neo Geo Pocket", 
+      "path": "G:\\Games\\NGP",
+      "handler": "/emulator/?core=ngp",
+      "ssPlatformId": "25" 
+   },
+   { 
+      "id": "segaGG",
+      "name": "Sega Game Gear", 
+      "ssPlatformId": "21",
+      "handler": "/emulator/?core=segaGG",
+      "path": "G:\\Games\\SGG"
+   },
+   {
+      "id": "segaSaturn",
+      "name": "Sega Saturn", 
+      "handler": "/emulator/?core=segaSaturn",
+      "path": "G:\\Games\\Saturn",
+      "ssPlatformId": "22" 
+   },
+   { 
+      "id": "atari7800",
+      "name": "Atari 7800", 
+      "ssPlatformId": "41",
+      "handler": "/emulator/?core=atari7800",
+      "path": "G:\\Games\\Atari7800"
+   },
+   { 
+      "id": "ws", 
+      "name": "WonderSwan",
+      "handler": "/emulator/?core=ws",
+      "path": "G:\\Games\\WS",
+      "ssPlatformId": "45" 
+   },
+   { 
+      "id": "wsc", 
+      "name": "WonderSwan Color", 
+      "handler": "/emulator/?core=ws&folder=wsc",
+      "path": "G:\\Games\\WSC",
+      "ssPlatformId": "46"
+   },
+   { 
+      "id": "pce",
+      "name": "TurboGrafx-16 / PC Engine", 
+      "handler": "/emulator/?core=pce",
+      "path": "G:\\Games\\PCE",
+      "ssPlatformId": "31" },
+   { 
+      "id": "igs", 
+      "name": "IGS",
+      "ssPlatformId": "176",
+      "path": "G:\\Games\\IGS",
+      "handler": "/emulator/?core=arcade&folder=igs"
+   },
+   { 
+      "id": "neogeo",
+      "name": "Neo Geo",
+      "ssPlatformId": "142",
+      "path": "G:\\Games\\NeoGeo",
+      "handler": "/emulator/?core=arcade&folder=neogeo"
+   },
+   { 
+      "id": "atari2600",
+      "name": "Atari 2600",
+      "handler": "/emulator/?core=atari2600",
+      "path": "G:\\Games\\Atari2600",
+      "ssPlatformId": "26" 
+   },
+   { 
+      "id": "dos", 
+      "name": "MS-DOS", 
+      "path": "G:\\Games\\DOS",
+      "handler": "/jsdos",
+      "ssPlatformId": "135" 
+   },
+   { 
+      "id": "epub", 
+      "name": "EPUB", 
+      "path": "G:\\EPUB\\",
+      "handler": "/epubreader",
+      "image": "/epub.png"
+   },
+   { 
+      "id": "pdf", 
+      "name": "PDF", 
+      "path": "G:\\PDF\\",
+      "handler": "/pdfreader",
+      "image": "/pdf.png"
+   }
 ]

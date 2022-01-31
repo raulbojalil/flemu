@@ -1,3 +1,4 @@
+import 'package:flemu/api/file_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'app_config.dart';
@@ -14,28 +15,19 @@ const defaultPadding = 30.0;
 const mobileMaxWidth = 700;
 const desktopMinWidth = 1100;
 
-buildImageUrl(String system, String name) {
-  return "${AppConfig.getInstance().apiUrl}/filemanager/image?system=$system&name=$name";
+buildImageUrl(String systemId, String name) {
+  return "${AppConfig.getInstance().apiUrl}/filemanager/image?system=$systemId&name=$name";
 }
 
-buildSystemImageUrl(String system) {
-  return "${AppConfig.getInstance().apiUrl}/filemanager/systemimage?system=$system";
+buildSystemImageUrl(String systemId) {
+  return "${AppConfig.getInstance().apiUrl}/filemanager/systemimage?system=$systemId";
 }
 
-buildEmulatorUrl(String core, String filename) {
-  return "${AppConfig.getInstance().apiUrl}/emulator?core=$core&filename=$filename";
+buildFileHandlerUrl(String handler, String filename, String bios) {
+  var separator = !handler.contains("?") ? "?" : "&";
+  return "${AppConfig.getInstance().apiUrl}$handler${separator}filename=$filename&bios=$bios";
 }
 
-buildEpubReaderUrl(String filename) {
-  return "${AppConfig.getInstance().apiUrl}/epubreader?filename=$filename";
-}
-
-buildFileHandlerUrl(String core, String filename) {
-  return filename.endsWith(".epub")
-      ? buildEpubReaderUrl(filename)
-      : buildEmulatorUrl(core, filename);
-}
-
-buildDownloadUrl(String folder, String filename) {
-  return "${AppConfig.getInstance().apiUrl}/filemanager/download?folder=$folder&filename=$filename";
+buildDownloadUrl(String systemId, String filename) {
+  return "${AppConfig.getInstance().apiUrl}/filemanager/download?system=$systemId&filename=$filename";
 }

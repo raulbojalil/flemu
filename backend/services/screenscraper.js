@@ -33,6 +33,20 @@ const downloadGameImage = function(gameId, outputFilepath, region) {
   });
 }
 
+exports.downloadGameList = function(systemId, outputFilepath) {
+  return new Promise((resolve, reject) => {
+    const csvUrl = `https://www.screenscraper.fr/medias/${systemId}/gameslist.csv`;
+    client.get(csvUrl, (csvRes) => {
+      console.log(`Writing to ${outputFilepath}...`);
+      csvRes.pipe(fs.createWriteStream(outputFilepath))
+        .on('error', () => reject())
+        .once('close', () => {
+          resolve();
+        });
+    });
+  });
+}
+
 exports.downloadSystemImage = function(systemId, outputFilepath) {
   return new Promise((resolve, reject) => {
     const imageUrl = `https://www.screenscraper.fr/image.php?plateformid=${systemId}&media=wheel&region=wor&num=&version=&maxwidth=500&maxheight=500`;

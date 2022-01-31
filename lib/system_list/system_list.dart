@@ -79,8 +79,8 @@ class _SystemListState extends State<SystemList> {
                                 onTap: () {
                                   onSystemSelected(_systems[index]);
                                 },
-                                child: Image.network(buildSystemImageUrl(
-                                    _systems[index].core)))),
+                                child: Image.network(
+                                    buildSystemImageUrl(_systems[index].id)))),
                         decoration: BoxDecoration(
                             color: Colors.grey.shade700,
                             borderRadius: BorderRadius.circular(15)),

@@ -3,17 +3,7 @@ const path = require('path');
 
 const screenscraper = require('./services/screenscraper');
 
-let _gameDb = {};
-let _gameFolders = {};
 let _systems = {};
-
-fs.readFile('./game_db.json', 'utf8', (err, data) => {
-  _gameDb = JSON.parse(data);
-});
-
-fs.readFile('./game_paths.json', 'utf8', (err, data) => {
-  _gameFolders = JSON.parse(data);
-});
 
 fs.readFile('./systems.json', 'utf8', (err, data) => {
   _systems = JSON.parse(data);
@@ -21,23 +11,65 @@ fs.readFile('./systems.json', 'utf8', (err, data) => {
 
 const getGameIdFromName = (system, name) => {
 
-  const nameToLowerCase = name.toLowerCase().replace(", the", "");
-  const games = _gameDb[system].sort((a,b) => b.name.length - a.name.length);
+  const tryGetGameId = (csvDataFile) => {
 
-  for(var i=0; i < games.length; i++) {
+    const csvData = fs.readFileSync(csvDataFile, 'utf8');
 
-    if(nameToLowerCase.includes(games[i].name.toLowerCase())) {
-      const gameId = games[i].id;
-      console.log(`Found game id: ${gameId}: ${games[i].name}`);
-      return gameId;
+    const lines = csvData.split('\n');
+
+    const nameToLowerCase = name.toLowerCase();
+    const games = lines.sort((a,b) => b.length - a.length);
+
+    for (let i = 1; i < games.length; i++) {
+
+      if (!games[i]) continue;
+
+      const gameId = games[i].split(';')[0].replace(/"/g, '');
+      const gameName = games[i].split(';')[1].replace(/"/g, '');
+
+      if (nameToLowerCase.includes(gameName.toLowerCase())) {
+        console.log(`Found game id: ${gameId}: ${gameName}`);
+        return gameId;
+      }
     }
-  }
 
-  return undefined;
+    return undefined;    
+  };
+
+  return new Promise((resolve, reject) => {
+
+    const systemData = _systems.find(x => x.id === system);
+
+    if (!systemData) {
+      console.log(`System '${system}' not found`);
+      resolve(undefined);
+      return;
+    }
+    
+    const cachedGameListsFolder = __dirname + '/gamelists/';
+
+    if (!fs.existsSync(cachedGameListsFolder)) {
+      fs.mkdirSync(cachedGameListsFolder, { recursive: true });
+    }
+
+    const cachedFilename = path.join(cachedGameListsFolder, system + '.csv');
+
+    if (!fs.existsSync(cachedFilename)) {
+      screenscraper.downloadGameList(systemData.ssPlatformId, cachedFilename).then(() => {
+        const gameId = tryGetGameId(cachedFilename);
+        resolve(gameId);
+      });
+    }
+    else {
+      const gameId = tryGetGameId(cachedFilename);
+      resolve(gameId);
+    }
+    
+  });
 }
 
 const getSystemPlatformId = (system) => {
-  const systemData = _systems.find(x => x.core === system);
+  const systemData = _systems.find(x => x.id === system);
 
   if(systemData) return systemData.ssPlatformId;
 
@@ -51,6 +83,14 @@ exports.getSystems = (req, res) => {
 exports.getDescription = (req, res) => {
   
   const system = req.query.system;
+
+  const platformId = getSystemPlatformId(system);
+
+  if(!platformId) {
+    res.json([]);
+    return;
+  }
+
   const cachedDescriptionsFolder = __dirname + '/descriptions/' + system;
   const cachedFilename = path.join(cachedDescriptionsFolder, req.query.name + '.json');
 
@@ -59,20 +99,22 @@ exports.getDescription = (req, res) => {
   }
 
   if (fs.existsSync(cachedFilename)) {
+    console.log(`Reading ${cachedFilename}...`);
     fs.readFile(cachedFilename, 'utf8', (err, data) => {
       res.json(JSON.parse(data));
     });
   } else {
-    const gameId = getGameIdFromName(system, req.query.name);
-
-    if(!gameId) {
-      res.json([]);
-      return;
-    }
-
-    screenscraper.downloadGameDescriptions(gameId, cachedFilename).then(() => {
-      fs.readFile(cachedFilename, 'utf8', (err, data) => {
-        res.json(JSON.parse(data));
+    
+    getGameIdFromName(system, req.query.name).then((gameId) => {
+      if(!gameId) {
+        res.json([]);
+        return;
+      }
+  
+      screenscraper.downloadGameDescriptions(gameId, cachedFilename).then(() => {
+        fs.readFile(cachedFilename, 'utf8', (err, data) => {
+          res.json(JSON.parse(data));
+        });
       });
     });
   }
@@ -83,6 +125,13 @@ exports.getImage = (req, res) => {
 
   const system = req.query.system;
   const fallbackImage = __dirname + '/notfound.jpg';
+
+  const platformId = getSystemPlatformId(system);
+
+  if(!platformId) {
+    res.sendFile(fallbackImage);
+    return;
+  }
 
   const cachedImagesFolder = __dirname + '/images/' + system;
   const cachedFilename = path.join(cachedImagesFolder, req.query.name + '.jpg');
@@ -96,15 +145,17 @@ exports.getImage = (req, res) => {
     return;
   }
 
-  const gameId = getGameIdFromName(system, req.query.name);
+  getGameIdFromName(system, req.query.name).then((gameId) => {
 
-  if(!gameId) {
-    res.sendFile(fallbackImage);
-    return;
-  }
-
-  screenscraper.downloadGameImage(gameId, cachedFilename).then(() => {
-    res.sendFile(cachedFilename);
+    if(!gameId) {
+      res.sendFile(fallbackImage);
+      return;
+    }
+  
+    screenscraper.downloadGameImage(gameId, cachedFilename).then(() => {
+      res.sendFile(cachedFilename);
+    });
+  
   });
 
 };
@@ -113,8 +164,10 @@ exports.getSystemImage = (req, res) => {
 
   const system = req.query.system;
 
-  if(system === 'epub') {
-    res.sendFile(__dirname + '/epub.png');
+  const systemData = _systems.find(x => x.id === system);
+
+  if(systemData.image) {
+    res.sendFile(__dirname + systemData.image);
     return;
   }
 
@@ -146,13 +199,22 @@ exports.getSystemImage = (req, res) => {
 };
 
 exports.downloadFile = (req, res) => {
-  const folder = _gameFolders[req.query.folder];  
-  res.download(path.join(folder, req.query.filename), req.query.filename);
+  const system = req.query.system;
+  const systemData = _systems.find(x => x.id === system);
+
+  const file = path.join(systemData.path, req.query.filename);
+
+  if (fs.existsSync(file)) 
+    res.download(file, req.query.filename);
+  else 
+    res.sendStatus(404);
 };
 
 exports.listFolderContents = (req, res) => {
-  const folder = _gameFolders[req.query.folder];
-  const files = fs.readdirSync(folder);
+  const system = req.query.system;
+  const systemData = _systems.find(x => x.id === system);
+  const files = fs.readdirSync(systemData.path);
+
   res.json(files);
 };
 
@@ -195,5 +257,4 @@ exports.loadState = (req, res) => {
   fs.readFile(saveState, 'utf8', (err, data) => {
      res.json({ state: data });
   });
-
 }

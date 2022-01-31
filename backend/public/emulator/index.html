@@ -7,19 +7,15 @@
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     
-    const folder = params.core;
+    const folder = params.folder || params.core;
+    const bios = params.bios || '';
     let core = params.core;
-
-    if(core === "gbc") core = "gb";
-    else if(core === "wsc") core = "ws";
-    else if(core === "igs" || core === "neogeo") core = "arcade";
 
     EJS_player = '#game';
 
-    //TODO: Implement the BIOS for systems that require it
-    EJS_biosUrl = ''; // Url to Bios file
-    EJS_gameUrl = '/filemanager/download?folder=' + folder + '&filename=' + params.filename; // Url to Game rom
-    EJS_core = params.core;
+    EJS_biosUrl = bios; // Url to Bios file
+    EJS_gameUrl = '/filemanager/download?system=' + folder + '&filename=' + params.filename; // Url to Game rom
+    EJS_core = core;
     EJS_pathtodata = 'data/'; //path to all of the wasm and js files. MUST all be in the same directory!!
     EJS_AdUrl = ''; //path to AD page
 

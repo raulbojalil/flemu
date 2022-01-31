@@ -50,6 +50,8 @@ app.*.map.json
 /backend/descriptions
 /backend/saves
 /backend/system_images
+/backend/gamelists
+/backend/public/bios
 
 /windows
 /linux

@@ -42,7 +42,7 @@ class _GameListScreenState extends State<GameListScreen> {
               Expanded(
                   flex: 4,
                   child: GameList(
-                      system: system.core,
+                      system: system,
                       onGameSelected: (game) {
                         setState(() {
                           _selectedGame = game;
@@ -56,15 +56,15 @@ class _GameListScreenState extends State<GameListScreen> {
                       child: GameDetails(
                         key: Key(_selectedGame),
                         game: _selectedGame,
-                        system: system.core,
+                        system: system,
                       )))
             ],
           ),
           mobile: GameList(
-              system: system.core,
+              system: system,
               onGameSelected: (String game) {
-                js.context.callMethod(
-                    'open', [buildFileHandlerUrl(system.core, game)]);
+                js.context.callMethod('open',
+                    [buildFileHandlerUrl(system.handler, game, system.bios)]);
               })), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -6,11 +6,12 @@ A responsive web frontend for [Emulator JS](https://github.com/ethanaobrien/emul
 
 ### How to build and run in development mode
 
-* First of all, configure your game folders in flemu\backend\game_paths.json. These paths should contain valid game files according to the specific system
+* First of all, configure your game folders in flemu\backend\systems.json (use the path property). These paths should contain valid game files according to the specific system.
 
 ``
 {
-   "snes": "C:\\Games\\SNES"
+   ...
+   "path": "C:\\Games\\SNES"
    ...
 }
 ``
