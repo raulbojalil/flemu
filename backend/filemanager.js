@@ -213,9 +213,14 @@ exports.downloadFile = (req, res) => {
 exports.listFolderContents = (req, res) => {
   const system = req.query.system;
   const systemData = _systems.find(x => x.id === system);
-  const files = fs.readdirSync(systemData.path);
 
-  res.json(files);
+  if (systemData.path) {
+    const files = fs.readdirSync(systemData.path);
+    res.json(files.map(name => { return { name } }));
+  }
+  else if(systemData.links) {
+    res.json(systemData.links);
+  }
 };
 
 exports.saveState = (req, res) => {
