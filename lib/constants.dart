@@ -11,6 +11,7 @@ const errorColor = Color(0xFFF44336);
 
 const searchBoxPadding = 30.0;
 const defaultPadding = 30.0;
+const descriptionHeight = 100.0;
 
 const mobileMaxWidth = 700;
 const desktopMinWidth = 1100;

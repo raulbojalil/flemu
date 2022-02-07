@@ -2,9 +2,9 @@ import 'package:flemu/common/error_message.dart';
 import 'package:flemu/common/skeleton_loader.dart';
 import 'package:flemu/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:skeletons/skeletons.dart';
-
+import 'game_list.i18n.dart';
 import '../api/file_manager.dart';
+
 import 'dart:js' as js;
 
 class GameList extends StatefulWidget {
@@ -27,7 +27,7 @@ class _GameListState extends State<GameList> {
 
   bool _loading = false;
   bool _hasError = false;
-  List<String> _games = [];
+  List<ListFile> _games = [];
   String _filterText = "";
 
   Future<void> loadGames() async {
@@ -75,7 +75,7 @@ class _GameListState extends State<GameList> {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50)),
-                        labelText: "Search",
+                        labelText: "Search".i18n,
                         prefixIcon: const Icon(Icons.search),
                         contentPadding:
                             const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -89,11 +89,11 @@ class _GameListState extends State<GameList> {
                           children: [
                             for (var game in _games.where((element) =>
                                 _filterText == "" ||
-                                element
+                                element.name
                                     .toLowerCase()
                                     .contains(_filterText.toLowerCase())))
                               ListTile(
-                                title: Text(game),
+                                title: Text(game.name),
                                 onTap: () {
                                   onGameSelected(game);
                                 },

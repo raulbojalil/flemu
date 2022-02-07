@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   skeletons: ^0.0.3
+  i18n_extension: ^4.2.0
+  flutter_localizations: 
+    sdk: flutter
+    version: ^0.0.0
 
 dev_dependencies:
   flutter_test:

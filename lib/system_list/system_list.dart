@@ -2,7 +2,6 @@ import 'package:flemu/common/error_message.dart';
 import 'package:flemu/common/skeleton_loader.dart';
 import 'package:flemu/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:skeletons/skeletons.dart';
 import '../api/file_manager.dart';
 
 class SystemList extends StatefulWidget {
@@ -71,19 +70,20 @@ class _SystemListState extends State<SystemList> {
                             mainAxisSpacing: 20),
                     itemCount: _systems.length,
                     itemBuilder: (BuildContext ctx, index) {
-                      return Container(
-                        alignment: Alignment.center,
-                        child: Padding(
-                            padding: const EdgeInsets.all(defaultPadding / 2),
-                            child: InkWell(
-                                onTap: () {
-                                  onSystemSelected(_systems[index]);
-                                },
+                      return InkWell(
+                        onTap: () {
+                          onSystemSelected(_systems[index]);
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade700,
+                                borderRadius: BorderRadius.circular(15)),
+                            alignment: Alignment.center,
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.all(defaultPadding / 2),
                                 child: Image.network(
                                     buildSystemImageUrl(_systems[index].id)))),
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade700,
-                            borderRadius: BorderRadius.circular(15)),
                       );
                     }));
   }

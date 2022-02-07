@@ -1,5 +1,6 @@
 import 'package:flemu/constants.dart';
 import 'package:flutter/material.dart';
+import 'error_message.i18n.dart';
 
 class ErrorMessage extends StatelessWidget {
   const ErrorMessage({Key? key}) : super(key: key);
@@ -10,7 +11,8 @@ class ErrorMessage extends StatelessWidget {
         color: errorColor,
         width: double.infinity,
         padding: const EdgeInsets.all(defaultPadding),
-        child: const Text(
-            "An error has occurred. Please check your connection and try again."));
+        child: Text(
+            "An error has occurred. Please check your connection and try again."
+                .i18n));
   }
 }

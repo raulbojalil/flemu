@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../app_config.dart';
 
@@ -23,29 +24,45 @@ class GameDescription {
   GameDescription({required this.lang, required this.description});
 }
 
+class ListFile {
+  final String name;
+  final String url;
+
+  ListFile({required this.name, required this.url});
+}
+
 class FileManager {
-  static Future<List<String>> listGames(String system) async {
-    var gameList = await _httpRequest(
+  static Future<List<ListFile>> listGames(String system) async {
+    var gameList = await _requestJson(
         "${AppConfig.getInstance().apiUrl}/filemanager/list?system=$system",
         "get", {});
 
-    return List<String>.from(gameList);
+    var list = gameList.map((x) =>
+        ListFile(url: x["url"]?.toString() ?? "", name: x["name"].toString()));
+
+    return List<ListFile>.from(list);
   }
 
   static Future<List<GameDescription>> fetchGameDescription(
       String system, String name) async {
-    var gameList = await _httpRequest(
+    var response = await _requestJson(
         "${AppConfig.getInstance().apiUrl}/filemanager/description?system=$system&name=$name",
         "get", {});
 
-    var list = gameList.map((x) => GameDescription(
+    var list = response.map((x) => GameDescription(
         lang: x["lang"].toString(), description: x["description"].toString()));
 
     return List<GameDescription>.from(list);
   }
 
+  static Future<Response> fetchGameImage(String system, String name) async {
+    return await _request(
+        "${AppConfig.getInstance().apiUrl}/filemanager/image?system=$system&name=$name",
+        "get", {});
+  }
+
   static Future<List<GameSystem>> listSystems() async {
-    var gameList = await _httpRequest(
+    var gameList = await _requestJson(
         "${AppConfig.getInstance().apiUrl}/filemanager/systems", "get", {});
 
     var list = gameList.map((x) => GameSystem(
@@ -73,7 +90,14 @@ class FileManager {
     return await client.get(Uri.parse(url));
   }
 
-  static Future<dynamic> _httpRequest(String url, method, Map bodyMap,
+  static Future<Response> _request(String url, method, Map bodyMap,
+      [bool authenticate = true]) async {
+    var client = http.Client();
+
+    return await _getRequest(client, method, url, json.encode(bodyMap));
+  }
+
+  static Future<dynamic> _requestJson(String url, method, Map bodyMap,
       [bool authenticate = true]) async {
     var client = http.Client();
 
